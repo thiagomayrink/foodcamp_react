@@ -1,3 +1,5 @@
+import Contador from "./contador"
+
 export default function Opcoes(props) {
     const {titulo, cardapio} = props;
     //const {nome, descricao, preco, img, imgAlt} = cardapio;
@@ -11,7 +13,7 @@ export default function Opcoes(props) {
                             <img src={i.img} alt={i.imgAlt}/>
                             <p>{i.nome}</p>
                             <p>{i.descricao}</p>
-                            <p>R$ {i.preco}</p>
+                            <p>R$ {i.preco}<Contador /></p>
                         </div>
                     </li>
                 ))}
