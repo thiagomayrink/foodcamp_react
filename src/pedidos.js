@@ -10,7 +10,7 @@ import caramelo from "./imgs/bala-caramelo.png"
 import sapo from "./imgs/Sapo_de_Chocolate.gif"
 import tamarindo from "./imgs/bala-tamarindo.png"
 
-export default function Pedidos(props) {
+export default function Pedidos({PedidosUsuario, setPedidosUsuario}) {
     const cardapio = [
         {titulo:"Primeiro, seu prato", 
         itens: [
@@ -34,7 +34,7 @@ export default function Pedidos(props) {
             ]
         }
     ]
-    const [PedidosUsuario, setPedidosUsuario] = React.useState([]);
+    
     return (
         <div className="Pedidos">
             <>

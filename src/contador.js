@@ -1,44 +1,48 @@
 import React from "react"
 
-export default function Contador({nome, PedidosUsuario, setPedidosUsuario}) {
+export default function Contador({ nome, PedidosUsuario, setPedidosUsuario}) {
     //indexPedido (undefined), deveria ser trocado no elemento pai na função selecionaItem, 
-    //bug: ao selecionar o contador continua 0, so atualiza no segundo click e pula de 0 pra 2.
-    const [IndexPedido, setIndexPedido] = React.useState(undefined);
-    const [IsActive, setIsActive] = React.useState(false);
-    let array = [...PedidosUsuario]
+    //bug: ao selecionar o contador continua 0, so atualiza no segundo click.
+    const [IndexPedido, setIndexPedido] = React.useState(undefined)
+    const [contador, setContador] = React.useState(1)
+    const array = [...PedidosUsuario]
     function buscaIndice(stIncexPedido,n) {
         let index;
         PedidosUsuario.forEach((e, i) => (e.nome === n) ? index=i : "" )
         stIncexPedido(index)
     }
-    function adicionaItem(n) {
-        if (IndexPedido !== undefined) {
+    function adicionaItem() {
+        if (IndexPedido !== undefined && array[IndexPedido]) {
             array[IndexPedido].qtd+=1;
             setPedidosUsuario(array)
-            setIsActive(true);
+            setContador(contador+1)
         }
     }
-    function removeItem(n) {
-        if (IndexPedido !== undefined) {
+    function removeItem() {
+        if (IndexPedido !== undefined && array[IndexPedido]) {
             if(array[IndexPedido].qtd>1){
                 array[IndexPedido].qtd-=1;
             setPedidosUsuario(array)
             } else if (array[IndexPedido].qtd === 1){
                 array.splice(IndexPedido);
                 setPedidosUsuario(array)
-                setIsActive(false)
+                if (contador >0) {
+                    setContador(contador-1)
+                }
             }
         }
     }
+    console.log(PedidosUsuario)
     return (
         <span className={(PedidosUsuario.some((e) => e.nome === nome)) ? "Contador" : "Contador oculto"}>
-            <span onClick={()=>{buscaIndice(setIndexPedido,nome);adicionaItem(nome)}} className="add">
+            <span onClick={()=>{buscaIndice(setIndexPedido,nome);adicionaItem()}} className="add">
                 +
-            </span> {/* Quando um item é removido da lista PedidosUsuario. e outro está selecionado isActive permanece true*/}
-            <span>{(IsActive) ? PedidosUsuario[IndexPedido].qtd : "0"}</span> {/*Bug quando removo 1 item e outro item continua selecionado*/}
-            <span onClick={()=>removeItem(nome)} className="rmv">
+            </span>
+            <span>{contador}</span> 
+            <span onClick={()=>removeItem()} className="rmv">
                 -
             </span>
         </span> 
     );
 }
+//PedidosUsuario[IndexPedido] ? PedidosUsuario[IndexPedido].qtd : "0"

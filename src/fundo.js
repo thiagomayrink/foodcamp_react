@@ -1,8 +1,7 @@
-export default function Fundo(props) {
-    const mensagemStatus = (<span> Selecione os 3 itens<br /> para fechar o pedido </span>)
+export default function Fundo({mensagemStatus, status}) {
     return (
         <div className="Fundo">
-            <button className="">
+            <button className={status}>
                 {mensagemStatus}
             </button>
         </div>
