@@ -5,24 +5,37 @@ import React from "react"
 
 export default function Menu(props) {
     const [PedidosUsuario, setPedidosUsuario] = React.useState([]);
-    // const [classe1, setClasse1] = React.useState(false)
-    // const [classe2, setClasse2] = React.useState(false)
-    // const [classe3, setClasse3] = React.useState(false)
-    // const lista1 = ["Hambúrguer de Siri", "Krusty Burguer", "Ramen do Naruto"]
-    // const lista2 = ["Cerveja Duff", "Nuka-Cola Gelada", "Cerveja Amanteigada"]
-    // const lista3 = ["Bala de Caramelo", "Sapo de Chocolate", "Bala de Tamarindo"]
-    // if (){
-
-    // }
-    // {(PedidosUsuario.some((e) => e.nome === nome)) ? "container_item ativo" : "container_item"}
+    const [verificador, setVerificador] = React.useState(false);
+    function verificaPedido() {
+        if (
+            (PedidosUsuario.some((e) => e.tipo === "Prato")) && 
+            (PedidosUsuario.some((e) => e.tipo === "Bebida")) && 
+            (PedidosUsuario.some((e) => e.tipo === "Sobremesa"))
+            ) {
+            setVerificador(true)
+        } else {
+            setVerificador(false)
+        }
+    }
+    function preparaPedido() {
+        let valorTotal=0;
+        PedidosUsuario.forEach((e) => valorTotal+=(e.preco*e.qtd))
+        let mensagem = `Ola, gostaria de fazer o pedido:\n`;
+        PedidosUsuario.forEach((item) => {
+          const totalItem = item.qtd > 1 ? ` (${item.qtd}x)` : "";
+          mensagem += ` - ${item.tipo}(s): ${item.nome}${totalItem}\n`;
+        });
+        mensagem += `Total: R$ ${valorTotal.toFixed(2).replace(".", ",")}`;
+        const msgFinal = encodeURIComponent(mensagem);
+        const UrlMsg = "https://wa.me/5500000000000?text=" + msgFinal;
+        window.open(UrlMsg);
+      }
+    
     return (
         <div className="Menu">
             <Topo titulo="Foodcamp" subtitulo="Sua comida em 6 minutos"/>
-            <Pedidos PedidosUsuario={PedidosUsuario} setPedidosUsuario={setPedidosUsuario} />
-            <Fundo>
-            {<span> Selecione os 3 itens<br /> para fechar o pedido </span>}
-            {<span> Fazer pedido </span>}
-            </Fundo>
+            <Pedidos verificaPedido={verificaPedido} PedidosUsuario={PedidosUsuario} setPedidosUsuario={setPedidosUsuario} />
+            <Fundo verificador={verificador} PedidosUsuario={PedidosUsuario} preparaPedido={preparaPedido} />
         </div>
     );
 }

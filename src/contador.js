@@ -1,41 +1,31 @@
 import React from "react"
 
-export default function Contador({ nome, PedidosUsuario, setPedidosUsuario}) {
-    //indexPedido (undefined), deveria ser trocado no elemento pai na função selecionaItem, 
-    //bug: ao selecionar o contador continua 0, so atualiza no segundo click.
-    const [IndexPedido, setIndexPedido] = React.useState(undefined)
+export default function Contador({nome, PedidosUsuario, setPedidosUsuario, verificaPedido}) {
     const [contador, setContador] = React.useState(1)
-    const array = [...PedidosUsuario]
-    function buscaIndice(stIncexPedido,n) {
-        let index;
-        PedidosUsuario.forEach((e, i) => (e.nome === n) ? index=i : "" )
-        stIncexPedido(index)
-    }
     function adicionaItem() {
-        if (IndexPedido !== undefined && array[IndexPedido]) {
-            array[IndexPedido].qtd+=1;
-            setPedidosUsuario(array)
-            setContador(contador+1)
-        }
+        const indice = PedidosUsuario.findIndex(p => p.nome === nome);
+        PedidosUsuario[indice].qtd = contador + 1;
+        setPedidosUsuario([...PedidosUsuario]);
+        setContador(contador+1);
+        verificaPedido();
     }
     function removeItem() {
-        if (IndexPedido !== undefined && array[IndexPedido]) {
-            if(array[IndexPedido].qtd>1){
-                array[IndexPedido].qtd-=1;
-            setPedidosUsuario(array)
-            } else if (array[IndexPedido].qtd === 1){
-                array.splice(IndexPedido);
-                setPedidosUsuario(array)
-                if (contador >0) {
-                    setContador(contador-1)
-                }
-            }
+        const indice = PedidosUsuario.findIndex(p => p.nome === nome);
+        if(PedidosUsuario[indice].qtd === 1){
+            const array = [...PedidosUsuario];
+            array.splice(indice);
+            setPedidosUsuario(array);
+            verificaPedido();
+        }else {
+            PedidosUsuario[indice].qtd = contador - 1;
+            setContador(contador-1);
+            verificaPedido();
         }
     }
     console.log(PedidosUsuario)
     return (
         <span className={(PedidosUsuario.some((e) => e.nome === nome)) ? "Contador" : "Contador oculto"}>
-            <span onClick={()=>{buscaIndice(setIndexPedido,nome);adicionaItem()}} className="add">
+            <span onClick={()=>{adicionaItem()}} className="add">
                 +
             </span>
             <span>{contador}</span> 
@@ -45,4 +35,3 @@ export default function Contador({ nome, PedidosUsuario, setPedidosUsuario}) {
         </span> 
     );
 }
-//PedidosUsuario[IndexPedido] ? PedidosUsuario[IndexPedido].qtd : "0"
