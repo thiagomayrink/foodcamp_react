@@ -66,9 +66,11 @@ body {
   letter-spacing: 0.018em;
   color: #333;
 }
-.Pedidos ul::-webkit-scrollbar {
-  display: none;
-}
+  @media(max-width: 900px) {
+    .Pedidos ul::-webkit-scrollbar {
+      display: none;
+    }
+  }
 .Pedidos ul {
   margin-bottom: 32px;
   margin-top: 16px;

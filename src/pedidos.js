@@ -40,7 +40,7 @@ export default function Pedidos({PedidosUsuario, setPedidosUsuario, verificaPedi
             <>
                 {cardapio.map(({titulo, itens}, i) => (
                     <Opcoes 
-                    key={i} titulo={titulo}
+                    key={i.toString()} titulo={titulo}
                     cardapio={itens} 
                     setPedidosUsuario={setPedidosUsuario} 
                     PedidosUsuario={PedidosUsuario}

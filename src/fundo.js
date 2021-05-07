@@ -1,5 +1,4 @@
 export default function Fundo({verificador, preparaPedido}) {
-    console.log(verificador)
     return (
         <div className="Fundo">
             <button className={verificador ? "ativo" : ""} onClick={verificador? ()=>preparaPedido(): null} >

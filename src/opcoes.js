@@ -1,7 +1,7 @@
 import Contador from "./contador"
 import React from "react"
 
-export default function Opcoes({titulo, cardapio, key, PedidosUsuario, setPedidosUsuario, verificaPedido}) {
+export default function Opcoes({titulo, cardapio, PedidosUsuario, setPedidosUsuario, verificaPedido}) {
     function selecionaItem(t, n, p) {
         let indexPedido = undefined;
         PedidosUsuario.forEach((e, i) => (e.nome === n) ? indexPedido = i : indexPedido = undefined)
@@ -13,17 +13,17 @@ export default function Opcoes({titulo, cardapio, key, PedidosUsuario, setPedido
     }
     verificaPedido();
     return(
-        <div key={key} className="Opcoes">
+        <div className="Opcoes">
             <span>{titulo}</span>
             <ul className="itens">
                 {cardapio.map(({tipo, nome, descricao, preco, img, imgAlt},i)=>(
-                    <li key={i}>
+                    <li key={i.toString()}>
                         <div className={(PedidosUsuario.some((e) => e.nome === nome)) ? "container_item ativo" : "container_item"} onClick={() => selecionaItem(tipo,nome,preco)}>
                             <img src={img} alt={imgAlt}/>
                             <p>{nome}</p>
                             <p>{descricao}</p>
                             <p>R$ {preco}
-                                <Contador 
+                                <Contador
                                     nome={nome} 
                                     PedidosUsuario={PedidosUsuario} 
                                     setPedidosUsuario={setPedidosUsuario}
