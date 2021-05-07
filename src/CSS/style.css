@@ -85,7 +85,6 @@ body {
   padding: 19px 13px 20px 15px;
   background: #FFF;
   border-radius: 9px;
-  border: 4px solid #FFF;
   box-shadow: 0 0 10px -4px rgb(0 0 0 / 25%);
 }
 .container_item img {
@@ -141,4 +140,7 @@ body {
 }
 .rmv {
   color:#CF2B2B;
+}
+.oculto {
+  display: none;
 }
